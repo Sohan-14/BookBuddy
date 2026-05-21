@@ -13,6 +13,7 @@ class NetworkException extends AppException {
 }
 
 class ServerException extends AppException {
+
   const ServerException({
     required String message,
     required this.statusCode,
@@ -23,21 +24,16 @@ class ServerException extends AppException {
   String toString() =>
       'ServerException(statusCode: $statusCode, message: $message)';
 }
-
 class RequestTimeoutException extends AppException {
   const RequestTimeoutException([super.message = 'Request timed out']);
 }
 
 class UnauthorizedException extends AppException {
-  const UnauthorizedException([
-    super.message = 'Session expired. Please log in again',
-  ]);
+  const UnauthorizedException([super.message = 'Session expired. Please log in again']);
 }
 
 class ForbiddenException extends AppException {
-  const ForbiddenException([
-    super.message = 'You do not have permission to do this',
-  ]);
+  const ForbiddenException([super.message = 'You do not have permission to do this']);
 }
 
 class NotFoundException extends AppException {
@@ -52,6 +48,7 @@ class CacheException extends AppException {
   const CacheException([super.message = 'Cache Error']);
 }
 
+
 class UnknownException extends AppException {
   const UnknownException([super.message = 'An unexpected error occurred']);
 }
@@ -61,19 +58,13 @@ class BadRequestException extends AppException {
 }
 
 class ConflictException extends AppException {
-  const ConflictException([
-    super.message = 'Resource conflict. Please try again',
-  ]);
+  const ConflictException([super.message = 'Resource conflict. Please try again']);
 }
 
 class TooManyRequestsException extends AppException {
-  const TooManyRequestsException([
-    super.message = 'Too many attempts. Please try again later',
-  ]);
+  const TooManyRequestsException([super.message = 'Too many attempts. Please try again later']);
 }
 
 class ServiceUnavailableException extends AppException {
-  const ServiceUnavailableException([
-    super.message = 'Service temporarily unavailable',
-  ]);
+  const ServiceUnavailableException([super.message = 'Service temporarily unavailable']);
 }

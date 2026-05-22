@@ -1,4 +1,6 @@
 import 'package:book_buddy/core/router/app_routes.dart';
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:book_buddy/core/widgets/empty_state_widget.dart';
 import 'package:book_buddy/features/books/domain/entities/book_entity.dart';
 import 'package:book_buddy/features/favorites/presentation/notifiers/favorites_notifier.dart';
@@ -16,7 +18,16 @@ class FavoritesScreen extends ConsumerWidget {
     final favorites = ref.watch(favoritesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Favorites')),
+      appBar: AppBar(
+        shadowColor: AppColors.surface,
+        surfaceTintColor: AppColors.surface,
+        backgroundColor: AppColors.surface,
+        title: Text(
+          'Favorites',
+          style: AppTextStyles.headlineMedium,
+        ),
+      ),
+      backgroundColor: AppColors.surface.withValues(alpha: .1),
       body: favorites.isEmpty
           ? EmptyStateWidget(
               action: () => context.go(AppRoutes.bookList),
@@ -40,57 +51,55 @@ class _FavoriteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Card(
+      color: AppColors.surface,
+      elevation: .5,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => context.push(AppRoutes.bookDetailPath(book.id)),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               _FavoriteCover(url: book.thumbnailUrl),
               const SizedBox(width: 12),
               Expanded(
-                child: SizedBox(
-                  height: 100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        book.title,
-                        style: theme.textTheme.titleMedium,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                child: Column(
+                  crossAxisAlignment: .start,
+                  mainAxisAlignment: .spaceBetween,
+                  spacing: 12,
+                  children: [
+                    Text(
+                      book.title,
+                      style: AppTextStyles.titleLarge,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      book.authorsDisplay,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.primary,
                       ),
-                      Text(
-                        book.authorsDisplay,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.primary,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.star_rounded,
+                          size: 14,
+                          color: Colors.amber,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (book.averageRating != null)
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.star_rounded,
-                              size: 14,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              book.averageRating!.toStringAsFixed(1),
-                              style: theme.textTheme.bodySmall,
-                            ),
-                          ],
+                        const SizedBox(width: 2),
+                        Text(
+                          book.averageRating?.toStringAsFixed(1) ??
+                              'No Ratings',
+                          style: AppTextStyles.bodyMedium,
                         ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               // Favorite toggle directly on card
@@ -118,8 +127,8 @@ class _FavoriteCover extends StatelessWidget {
               width: 70,
               height: 100,
               fit: BoxFit.cover,
-              placeholder: (_, __) => _Placeholder(),
-              errorWidget: (_, __, ___) => _Placeholder(),
+              placeholder: (_, _) => _Placeholder(),
+              errorWidget: (_, _, _) => _Placeholder(),
             )
           : _Placeholder(),
     );
@@ -133,12 +142,12 @@ class _Placeholder extends StatelessWidget {
       width: 70,
       height: 100,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: AppColors.textSecondary.withValues(alpha: .1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         Icons.book_rounded,
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
       ),
     );
   }

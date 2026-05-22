@@ -1,3 +1,5 @@
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class PaginationFooter extends StatelessWidget {
@@ -19,7 +21,11 @@ class PaginationFooter extends StatelessWidget {
     if (isLoadingMore) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primary,
+          ),
+        ),
       );
     }
 
@@ -30,15 +36,24 @@ class PaginationFooter extends StatelessWidget {
           children: [
             Text(
               errorMessage!,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.redAccent,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.error,
               ),
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
             TextButton.icon(
               onPressed: onRetry,
-              icon: const Icon(Icons.refresh_rounded, size: 16),
-              label: const Text('Retry'),
+              icon: const Icon(
+                Icons.refresh_rounded,
+                size: 16,
+                color: AppColors.textSecondary,
+              ),
+              label: Text(
+                'Retry',
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
             ),
           ],
         ),
@@ -51,10 +66,8 @@ class PaginationFooter extends StatelessWidget {
         child: Center(
           child: Text(
             '— End of results —',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurface.withValues(alpha: 0.4),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondary,
             ),
           ),
         ),

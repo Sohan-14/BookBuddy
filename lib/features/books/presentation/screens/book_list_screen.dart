@@ -59,9 +59,12 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
           style: AppTextStyles.displayLarge.copyWith(color: AppColors.surface),
         ),
       ),
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.surface.withValues(alpha: .1),
       body: Column(
         children: [
+          const SizedBox(
+            height: 12,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: BookSearchBar(

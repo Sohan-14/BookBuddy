@@ -1,4 +1,6 @@
 import 'package:book_buddy/core/error/error_mapper.dart';
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppErrorWidget extends StatelessWidget {
@@ -23,11 +25,6 @@ class AppErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isNetwork =
-        message.toLowerCase().contains('internet') ||
-        message.toLowerCase().contains('connect');
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -38,30 +35,20 @@ class AppErrorWidget extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
+                color: AppColors.error.withValues(alpha: 0.06),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                isNetwork
-                    ? Icons.wifi_off_rounded
-                    : Icons.error_outline_rounded,
+              child: const Icon(
+                Icons.error_outline_rounded,
                 size: 36,
-                color: theme.colorScheme.error,
+                color: AppColors.error,
               ),
             ),
             const SizedBox(height: 20),
             Text(
-              isNetwork ? 'No Internet Connection' : 'Something went wrong',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
               message,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -70,8 +57,15 @@ class AppErrorWidget extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh_rounded, size: 18),
-                label: const Text('Try Again'),
+                label: Text(
+                  'Try Again',
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.surface,
+                  ),
+                ),
                 style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  iconColor: AppColors.surface,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,

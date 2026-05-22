@@ -1,5 +1,3 @@
-import 'package:book_buddy/core/error/exceptions.dart';
-import 'package:book_buddy/core/error/failures.dart';
 import 'package:book_buddy/features/books/domain/usecases/get_books_usecase.dart';
 import 'package:book_buddy/features/books/presentation/providers/book_providers.dart';
 import 'package:book_buddy/features/books/presentation/states/book_list_state.dart';
@@ -14,8 +12,6 @@ class BookListNotifier extends _$BookListNotifier {
     return _fetchInitial();
   }
 
-  // ─── Private ────────────────────────────────────────────────────
-
   Future<BookListState> _fetchInitial({String query = ''}) async {
     try {
       final result = await ref
@@ -23,7 +19,7 @@ class BookListNotifier extends _$BookListNotifier {
           .call(GetBooksParams(query: query, startIndex: 0));
 
       return BookListState(
-        books: [],
+        books: result.books,
         totalItems: result.totalItems,
         currentStartIndex: result.books.length,
         hasReachedEnd: result.books.length >= result.totalItems,
@@ -34,13 +30,9 @@ class BookListNotifier extends _$BookListNotifier {
     }
   }
 
-  // ─── Public ─────────────────────────────────────────────────────
-
   /// Manual refresh — triggered by pull-to-refresh or retry button.
-  /// Sets AsyncLoading first, then re-fetches.
   Future<void> refresh() async {
     final currentQuery = state.value?.query ?? '';
-    // Manually set loading — does NOT trigger build() retry
     state = const AsyncLoading();
     state = await AsyncValue.guard(
       () => _fetchInitial(query: currentQuery),
@@ -90,27 +82,8 @@ class BookListNotifier extends _$BookListNotifier {
           clearPaginationError: true,
         ),
       );
-    } on NetworkFailure catch (e) {
-      state = AsyncData(
-        current.copyWith(
-          isLoadingMore: false,
-          paginationError: e.message,
-        ),
-      );
-    } on ServerFailure catch (e) {
-      state = AsyncData(
-        current.copyWith(
-          isLoadingMore: false,
-          paginationError: e.message,
-        ),
-      );
     } catch (e) {
-      state = AsyncData(
-        current.copyWith(
-          isLoadingMore: false,
-          paginationError: 'Something went wrong.',
-        ),
-      );
+      rethrow;
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:book_buddy/core/widgets/app_error_widget.dart';
 import 'package:book_buddy/core/widgets/empty_state_widget.dart';
 import 'package:book_buddy/core/widgets/shimmer_card.dart';
@@ -48,7 +50,16 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
     final asyncState = ref.watch(bookListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('BookBuddy')),
+      appBar: AppBar(
+        shadowColor: AppColors.primary,
+        surfaceTintColor: AppColors.primary,
+        backgroundColor: AppColors.primary,
+        title: Text(
+          'BookBuddy',
+          style: AppTextStyles.displayLarge.copyWith(color: AppColors.surface),
+        ),
+      ),
+      backgroundColor: AppColors.surface,
       body: Column(
         children: [
           Padding(
@@ -67,10 +78,23 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
               ),
               data: (bookState) {
                 if (bookState.isEmpty) {
-                  return EmptyStateWidget(
-                    message: bookState.query.isEmpty
-                        ? 'No books available.\nPull down to refresh.'
-                        : 'No results for "${bookState.query}".\nTry a different keyword.',
+                  return RefreshIndicator(
+                    onRefresh: () =>
+                        ref.read(bookListProvider.notifier).refresh(),
+                    child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: EmptyStateWidget(
+                            title: 'Not Found',
+                            message: bookState.query.isEmpty
+                                ? 'No books available. Pull down to refresh.'
+                                : 'No results for "${bookState.query}".\nTry a different keyword.',
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 }
 
@@ -103,9 +127,5 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
         ],
       ),
     );
-  }
-
-  String _errorMessage(Object error) {
-    return error.toString().replaceAll('Exception: ', '');
   }
 }

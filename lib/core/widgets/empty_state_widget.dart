@@ -1,3 +1,5 @@
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class EmptyStateWidget extends StatelessWidget {
@@ -18,8 +20,6 @@ class EmptyStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -31,8 +31,8 @@ class EmptyStateWidget extends StatelessWidget {
             if (title != null) ...[
               Text(
                 title!,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
+                style: AppTextStyles.headlineMedium.copyWith(
+                  color: AppColors.textPrimary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -40,8 +40,8 @@ class EmptyStateWidget extends StatelessWidget {
             ],
             Text(
               message,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textPrimary,
                 height: 1.6,
               ),
               textAlign: TextAlign.center,
@@ -73,19 +73,13 @@ class _EmptyIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final bgColor = theme.colorScheme.surfaceContainerHighest.withValues(
-      alpha: 0.6,
-    );
-
     return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        color: bgColor,
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
         shape: BoxShape.circle,
       ),
-      child: icon ?? const Icon(Icons.inbox_rounded, size: 44),
+      padding: const EdgeInsets.all(30),
+      child: icon ?? const Icon(Icons.donut_large_sharp, size: 28),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:book_buddy/core/router/app_routes.dart';
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:book_buddy/features/books/domain/entities/book_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,9 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Card(
+      color: AppColors.surface,
+      elevation: .5,
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => context.push(AppRoutes.bookDetailPath(book.id)),
@@ -28,19 +30,19 @@ class BookCard extends StatelessWidget {
                 child: SizedBox(
                   height: 100,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: .start,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         book.title,
-                        style: theme.textTheme.titleMedium,
+                        style: AppTextStyles.titleLarge,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         book.authorsDisplay,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.primary,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: AppColors.primary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -50,21 +52,22 @@ class BookCard extends StatelessWidget {
                           if (book.averageRating != null) ...[
                             const Icon(
                               Icons.star_rounded,
-                              size: 14,
+                              size: 18,
                               color: Colors.amber,
                             ),
                             const SizedBox(width: 2),
                             Text(
                               book.averageRating!.toStringAsFixed(1),
-                              style: theme.textTheme.bodySmall,
+                              style: AppTextStyles.bodyMedium,
                             ),
                             const SizedBox(width: 8),
                           ],
+                          const Spacer(),
                           if (book.pageCount != null)
                             Text(
                               '${book.pageCount} pages',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: theme.colorScheme.onSurface.withValues(
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: AppColors.textPrimary.withValues(
                                   alpha: 0.5,
                                 ),
                               ),
@@ -113,12 +116,12 @@ class _Placeholder extends StatelessWidget {
       width: 70,
       height: 100,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: AppColors.primary.withValues(alpha: .1),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Icon(
+      child: const Icon(
         Icons.book_rounded,
-        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+        color: AppColors.textSecondary,
       ),
     );
   }

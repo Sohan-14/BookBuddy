@@ -32,9 +32,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoutes.favorites,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Center(
-                    child: Text('Favorites'),
-                  ),
+                  child: FavoritesScreen(),
                 ),
               ),
             ],
@@ -54,14 +52,11 @@ GoRouter appRouter(Ref ref) {
         ],
       ),
 
-      // Outside shell — no bottom nav
       GoRoute(
         path: AppRoutes.bookDetail,
         builder: (context, state) {
           final bookId = state.pathParameters['id']!;
-          return Center(
-            child: Text(bookId),
-          );
+          return BookDetailScreen(bookId: bookId);
         },
       ),
     ],

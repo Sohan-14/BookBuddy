@@ -41,6 +41,7 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('REBUILD BOOK LIST SCREEN');
     final asyncState = ref.watch(bookListProvider);
 
     return Scaffold(

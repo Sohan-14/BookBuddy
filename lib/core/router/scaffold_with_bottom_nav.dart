@@ -2,10 +2,27 @@ import 'package:book_buddy/core/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ScaffoldWithBottomNav extends StatelessWidget {
-  const ScaffoldWithBottomNav({required this.child, super.key});
+class BottomTab {
+  const BottomTab({
+    required this.path,
+    required this.label,
+    required this.icon,
+    required this.activeIcon,
+  });
 
-  final Widget child;
+  final String path;
+  final String label;
+  final Widget icon;
+  final Widget activeIcon;
+}
+
+class ScaffoldWithBottomNav extends StatelessWidget {
+  const ScaffoldWithBottomNav({
+    required this.navigationShell,
+    super.key,
+  });
+
+  final StatefulNavigationShell navigationShell;
 
   static const List<BottomTab> _tabs = [
     BottomTab(
@@ -28,22 +45,19 @@ class ScaffoldWithBottomNav extends StatelessWidget {
     ),
   ];
 
-  int _locationToIndex(String location) {
-    if (location.startsWith(AppRoutes.favorites)) return 1;
-    if (location.startsWith(AppRoutes.settings)) return 2;
-    return 0;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString();
-    final currentIndex = _locationToIndex(location);
-
     return Scaffold(
-      body: child,
+      body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: (index) => context.go(_tabs[index].path),
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (index) {
+          if (navigationShell.currentIndex == index) return;
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
+        },
         destinations: _tabs
             .map(
               (tab) => NavigationDestination(
@@ -56,18 +70,4 @@ class ScaffoldWithBottomNav extends StatelessWidget {
       ),
     );
   }
-}
-
-class BottomTab {
-  const BottomTab({
-    required this.path,
-    required this.label,
-    required this.icon,
-    required this.activeIcon,
-  });
-
-  final String path;
-  final String label;
-  final Widget icon;
-  final Widget activeIcon;
 }

@@ -13,34 +13,48 @@ GoRouter appRouter(Ref ref) {
     initialLocation: AppRoutes.bookList,
     debugLogDiagnostics: true,
     routes: [
-      ShellRoute(
-        builder: (context, state, child) => ScaffoldWithBottomNav(child: child),
-        routes: [
-          GoRoute(
-            path: AppRoutes.bookList,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: BookListScreen(),
-            ),
-          ),
-          GoRoute(
-            path: AppRoutes.favorites,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: Center(
-                child: Text('Favorites'),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) =>
+            ScaffoldWithBottomNav(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.bookList,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: BookListScreen(),
+                ),
               ),
-            ),
+            ],
           ),
-          GoRoute(
-            path: AppRoutes.settings,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: Center(
-                child: Text('Settings'),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.favorites,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: Center(
+                    child: Text('Favorites'),
+                  ),
+                ),
               ),
-            ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.settings,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: Center(
+                    child: Text('Settings'),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
 
+      // Outside shell — no bottom nav
       GoRoute(
         path: AppRoutes.bookDetail,
         builder: (context, state) {

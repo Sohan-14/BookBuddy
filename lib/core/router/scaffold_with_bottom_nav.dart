@@ -1,3 +1,4 @@
+import 'package:book_buddy/core/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,19 +9,19 @@ class ScaffoldWithBottomNav extends StatelessWidget {
 
   static const List<BottomTab> _tabs = [
     BottomTab(
-      path: '/',
+      path: AppRoutes.bookList,
       label: 'Explore',
       icon: Icon(Icons.menu_book_outlined),
       activeIcon: Icon(Icons.menu_book),
     ),
     BottomTab(
-      path: '/favorites',
+      path: AppRoutes.favorites,
       label: 'Favorites',
       icon: Icon(Icons.favorite_outline),
       activeIcon: Icon(Icons.favorite),
     ),
     BottomTab(
-      path: '/settings',
+      path: AppRoutes.settings,
       label: 'Settings',
       icon: Icon(Icons.settings_outlined),
       activeIcon: Icon(Icons.settings),
@@ -28,8 +29,8 @@ class ScaffoldWithBottomNav extends StatelessWidget {
   ];
 
   int _locationToIndex(String location) {
-    if (location.startsWith('/favorites')) return 1;
-    if (location.startsWith('/settings')) return 2;
+    if (location.startsWith(AppRoutes.favorites)) return 1;
+    if (location.startsWith(AppRoutes.settings)) return 2;
     return 0;
   }
 

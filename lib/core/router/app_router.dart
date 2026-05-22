@@ -1,3 +1,4 @@
+import 'package:book_buddy/core/router/app_routes.dart';
 import 'package:book_buddy/core/router/scaffold_with_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,33 +9,33 @@ part 'app_router.g.dart';
 @Riverpod(keepAlive: true)
 GoRouter appRouter(Ref ref) {
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: AppRoutes.bookList,
     debugLogDiagnostics: true,
     routes: [
       ShellRoute(
         builder: (context, state, child) => ScaffoldWithBottomNav(child: child),
         routes: [
           GoRoute(
-            path: '/',
+            path: AppRoutes.bookList,
             pageBuilder: (context, state) => const NoTransitionPage(
               child: Center(
-                child: Text('data'),
+                child: Text('Book list'),
               ),
             ),
           ),
           GoRoute(
-            path: '/favorites',
+            path: AppRoutes.favorites,
             pageBuilder: (context, state) => const NoTransitionPage(
               child: Center(
-                child: Text('data'),
+                child: Text('Favorites'),
               ),
             ),
           ),
           GoRoute(
-            path: '/settings',
+            path: AppRoutes.settings,
             pageBuilder: (context, state) => const NoTransitionPage(
               child: Center(
-                child: Text('data'),
+                child: Text('Settings'),
               ),
             ),
           ),
@@ -42,18 +43,13 @@ GoRouter appRouter(Ref ref) {
       ),
 
       GoRoute(
-        path: '/books/:id',
+        path: AppRoutes.bookDetail,
         builder: (context, state) {
           final bookId = state.pathParameters['id']!;
           return Center(
             child: Text(bookId),
           );
         },
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: Center(
-            child: Text('data'),
-          ),
-        ),
       ),
     ],
   );

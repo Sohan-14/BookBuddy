@@ -22,12 +22,13 @@ class FavoritesScreen extends ConsumerWidget {
         shadowColor: AppColors.surface,
         surfaceTintColor: AppColors.surface,
         backgroundColor: AppColors.surface,
+        elevation: 1,
         title: Text(
           'Favorites',
           style: AppTextStyles.headlineMedium,
         ),
       ),
-      backgroundColor: AppColors.surface.withValues(alpha: .1),
+      backgroundColor: AppColors.surface.withValues(alpha: .6),
       body: favorites.isEmpty
           ? EmptyStateWidget(
               action: () => context.go(AppRoutes.bookList),

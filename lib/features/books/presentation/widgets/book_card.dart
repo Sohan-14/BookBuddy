@@ -49,19 +49,18 @@ class BookCard extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          if (book.averageRating != null) ...[
-                            const Icon(
-                              Icons.star_rounded,
-                              size: 18,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              book.averageRating!.toStringAsFixed(1),
-                              style: AppTextStyles.bodyMedium,
-                            ),
-                            const SizedBox(width: 8),
-                          ],
+                          const Icon(
+                            Icons.star_rounded,
+                            size: 18,
+                            color: Colors.amber,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            book.averageRating?.toStringAsFixed(1) ??
+                                'No Ratings',
+                            style: AppTextStyles.bodyMedium,
+                          ),
+                          const SizedBox(width: 8),
                           const Spacer(),
                           if (book.pageCount != null)
                             Text(

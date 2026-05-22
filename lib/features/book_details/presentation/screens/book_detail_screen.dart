@@ -23,8 +23,12 @@ class BookDetailScreen extends ConsumerWidget {
     final asyncState = ref.watch(bookListProvider);
 
     return asyncState.when(
-      loading: () => const Scaffold(body: LoadingWidget()),
+      loading: () => Scaffold(
+        backgroundColor: AppColors.surface.withValues(alpha: .6),
+        body: const LoadingWidget(),
+      ),
       error: (e, _) => Scaffold(
+        backgroundColor: AppColors.surface.withValues(alpha: .6),
         appBar: AppBar(),
         body: AppErrorWidget.fromFailure(e),
       ),
@@ -33,6 +37,7 @@ class BookDetailScreen extends ConsumerWidget {
 
         if (book == null) {
           return Scaffold(
+            backgroundColor: AppColors.surface.withValues(alpha: .6),
             appBar: AppBar(),
             body: const AppErrorWidget(message: 'Book not found.'),
           );
@@ -52,6 +57,7 @@ class _BookDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.surface,
       body: CustomScrollView(
         slivers: [
           DetailSliverAppBar(book: book),

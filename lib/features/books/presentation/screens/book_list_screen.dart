@@ -1,3 +1,6 @@
+import 'package:book_buddy/core/widgets/app_error_widget.dart';
+import 'package:book_buddy/core/widgets/empty_state_widget.dart';
+import 'package:book_buddy/core/widgets/shimmer_card.dart';
 import 'package:book_buddy/features/books/presentation/notifiers/book_list_notifier.dart';
 import 'package:book_buddy/features/books/presentation/widgets/book_card.dart';
 import 'package:book_buddy/features/books/presentation/widgets/book_search_bar.dart';
@@ -57,26 +60,17 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
           ),
           Expanded(
             child: asyncState.when(
-              // loading: () => const LoadingWidget(),
-              loading: () => const CircularProgressIndicator(),
-              // error: (error, _) => AppErrorWidget(
-              //   message: _errorMessage(error),
-              //   onRetry: () =>
-              //       ref.read(bookListNotifierProvider.notifier).refresh(),
-              // ),
-              error: (error, _) => Center(
-                child: Text(error.toString()),
+              loading: () => const ShimmerList(),
+              error: (error, _) => AppErrorWidget.fromFailure(
+                error,
+                onRetry: () => ref.read(bookListProvider.notifier).refresh(),
               ),
               data: (bookState) {
                 if (bookState.isEmpty) {
-                  // return EmptyStateWidget(
-                  //   icon: Icons.search_off_rounded,
-                  //   message: bookState.query.isEmpty
-                  //       ? 'No books available.\nPull down to refresh.'
-                  //       : 'No results for "${bookState.query}".\nTry a different keyword.',
-                  // );
-                  return const Center(
-                    child: Text("Empty"),
+                  return EmptyStateWidget(
+                    message: bookState.query.isEmpty
+                        ? 'No books available.\nPull down to refresh.'
+                        : 'No results for "${bookState.query}".\nTry a different keyword.',
                   );
                 }
 

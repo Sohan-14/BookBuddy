@@ -39,7 +39,6 @@ class FailureMapper {
       case final ServerException e:
         return ServerFailure(
           message: e.message,
-          statusCode: e.statusCode,
           code: e.code,
         );
 

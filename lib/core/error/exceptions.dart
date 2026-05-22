@@ -18,7 +18,7 @@ class ServerException extends AppException {
     required String message,
     required this.statusCode,
   }) : super(message);
-  final int statusCode;
+  final int? statusCode;
 
   @override
   String toString() =>

@@ -29,7 +29,7 @@ class FavoritesScreen extends ConsumerWidget {
           style: AppTextStyles.headlineMedium,
         ),
       ),
-      backgroundColor: AppColors.surface.withValues(alpha: .6),
+      backgroundColor: AppColors.surface,
       body: favorites.isEmpty
           ? EmptyStateWidget(
               action: () => context.go(AppRoutes.bookList),

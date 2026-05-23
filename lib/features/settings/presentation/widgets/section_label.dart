@@ -1,3 +1,5 @@
+import 'package:book_buddy/core/theme/app_colors.dart';
+import 'package:book_buddy/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class SectionLabel extends StatelessWidget {
@@ -7,15 +9,12 @@ class SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
       child: Text(
         label.toUpperCase(),
-        style: theme.textTheme.labelMedium?.copyWith(
-          color: theme.colorScheme.primary,
-          fontWeight: FontWeight.w600,
+        style: AppTextStyles.titleMedium.copyWith(
+          color: AppColors.primary,
           letterSpacing: 1.2,
         ),
       ),

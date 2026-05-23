@@ -33,7 +33,7 @@ class SettingsScreen extends ConsumerWidget {
           style: AppTextStyles.headlineMedium,
         ),
       ),
-      backgroundColor: AppColors.surface.withValues(alpha: .6),
+      backgroundColor: AppColors.surface,
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [

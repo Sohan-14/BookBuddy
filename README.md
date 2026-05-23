@@ -1,35 +1,29 @@
-# BookBuddy
+# BookBuddy 📚
 
-A Flutter app to search, browse, and favorite books using the Google Books API.
+A Flutter app to search, browse, and save favorite books using the Google Books API.
 
----
-
-## Tech Stack
-
-- **Flutter** — UI framework
-- **Riverpod** — State management (`riverpod_generator` annotation style)
-- **Dio** — HTTP client with interceptors
-- **Hive CE** — Local storage for favorites
-- **go_router** — Navigation
-- **very_good_analysis** — Lint rules
+> All available commands → [COMMAND.md](./COMMAND.md)
 
 ---
 
-## Setup
+## Setup Instructions
 
-#### Prerequisites
+### Prerequisites
+- Flutter SDK `>= 3.x`
+- Google Books API key → [console.cloud.google.com](https://console.cloud.google.com) → Enable **Books API** → Create credentials
 
-- A Google Books API key → [Get one here](https://console.cloud.google.com/) (Enable **Books API**)
-
-#### Run code generation
+### Install
 
 ```bash
+git clone https://github.com/Sohan-14/BookBuddy
+cd BookBuddy
+flutter pub get
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-### 4. Run the app
+### Run
 
-**Dev flavor**
+**Dev**
 ```bash
 flutter run -t lib/main_dev.dart \
   --dart-define=FLAVOR=dev \
@@ -39,7 +33,7 @@ flutter run -t lib/main_dev.dart \
   --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1
 ```
 
-**Prod flavor**
+**Prod**
 ```bash
 flutter run -t lib/main_prod.dart \
   --dart-define=FLAVOR=prod \
@@ -49,43 +43,49 @@ flutter run -t lib/main_prod.dart \
   --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1
 ```
 
+VSCode users: select a flavor from the Run panel using `.vscode/launch.json`.
+
 ---
 
 ## Flavor Setup
 
-No flavor packages used. Flavors are handled via `--dart-define` at run time, read in Dart via `String.fromEnvironment()` inside `FlavorConfig`.
+No flavor packages used. Flavors are handled via `--dart-define` passed at run time and read in Dart through `String.fromEnvironment()` inside `FlavorConfig`.
 
-| Property | Dev | Prod |
+Two entry points — `main_dev.dart` and `main_prod.dart` — each initializes `FlavorConfig` before the app starts.
+
+| | Dev | Prod |
 |---|---|---|
 | App name | BookBuddy Dev | BookBuddy |
-| Bundle ID suffix | `.dev` | — |
-| API key | Separate dev key | Separate prod key |
 | Entry point | `main_dev.dart` | `main_prod.dart` |
+| API key | Separate dev key | Separate prod key |
 
-VSCode users: use the pre-configured `.vscode/launch.json` — just select the flavor from the Run panel.
-
----
-
-## Architecture
-
-Feature-first Clean Architecture. Each feature owns its full vertical slice.
-
-```
-lib/
-├── core/          # Shared: network, storage, theme, router, error types
-├── features/
-│   ├── book_list/ # data / domain / presentation
-│   ├── book_detail/
-│   └── favorites/
-├── flavor_config.dart
-├── main_dev.dart
-└── main_prod.dart
-```
+To add a new flavor: create a new entry point `main_staging.dart`, add a new `--dart-define=FLAVOR=staging` run config, and handle it in `FlavorConfig`.
 
 ---
 
 ## State Management
 
-Riverpod with `@riverpod` code generation (modern annotation style, not legacy `StateNotifier`).
+Riverpod with `@riverpod` code generation — modern annotation style, not legacy `StateNotifier`.
+
+| Provider | Type | Responsibility |
+|---|---|---|
+| `BookListNotifier` | `AsyncNotifier` | Paginated list, search, pull to refresh |
+| `FavoritesNotifier` | `Notifier` | Sync Hive reads/writes, favourite toggle |
+| `AppRouter` | `keepAlive` provider | GoRouter single instance |
+
+
+- `FavoritesNotifier` uses `.select()` per book ID — toggling one favorite rebuilds only that book's widget, not the entire list
+- Error flow: datasource throws → repository  → notifier  → UI pattern matches `AsyncValue.error`
 
 ---
+
+## Screenshots & Demo
+
+| Explore | Detail | Favorites | Settings |
+|---|---|---|---|
+| ![explore](screenshots/explore.png) | ![detail](screenshots/details.png) | ![favorites](screenshots/favorites.png) | ![settings](screenshots/settings.png) |
+
+**Demo**
+
+![demo](screenshots/screen_record.mov)
+

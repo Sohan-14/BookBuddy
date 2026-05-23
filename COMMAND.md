@@ -1,27 +1,42 @@
-# run with dev flavor: from file
+#### Run with dev flavor: from file
+
+```bash
 flutter run -t lib/main_dev.dart --dart-define-from-file=config/dev.json
+```
 
-# run with prod flavor: from file
+#### Run with prod flavor: from file
+
+```bash
 flutter run -t lib/main_prod.dart --dart-define-from-file=config/prod.json
+```
 
-# Dev
+#### Dev
+```bash
 flutter run -t lib/main_dev.dart \
   --dart-define=FLAVOR=dev \
   --dart-define=APP_NAME="BookBuddy Dev" \
   --dart-define=APP_SUFFIX=.dev \
   --dart-define=BOOKS_API_KEY=YOUR_DEV_KEY \
   --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1
+```
 
-# Prod
+#### Prod
+
+```bash
 flutter run -t lib/main_prod.dart \
   --dart-define=FLAVOR=prod \
   --dart-define=APP_NAME="BookBuddy" \
   --dart-define=APP_SUFFIX="" \
   --dart-define=BOOKS_API_KEY=YOUR_PROD_KEY \
   --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1
+```
 
-# show 0 errors (some warnings from empty files is fine)
+#### Analysis code
+```bash
 flutter analyze
+```
 
-# Code Generation
+#### Code Generation
+```bash
 dart run build_runner build --delete-conflicting-outputs
+```

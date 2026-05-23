@@ -87,5 +87,5 @@ Riverpod with `@riverpod` code generation — modern annotation style, not legac
 
 **Demo**
 
-![demo](screenshots/screen_record.mov)
+![demo](screenshots/screen_record.gif)
 

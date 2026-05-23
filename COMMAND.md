@@ -40,3 +40,25 @@ flutter analyze
 ```bash
 dart run build_runner build --delete-conflicting-outputs
 ```
+
+#### Dev APK
+```bash
+flutter build apk \
+  --dart-define=FLAVOR=dev \
+  --dart-define=APP_NAME="BookBuddy Dev" \
+  --dart-define=APP_SUFFIX=.dev \
+  --dart-define=BOOKS_API_KEY=YOUR_DEV_KEY \
+  --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1 \
+  -t lib/main_dev.dart
+```
+
+#### Prod APK
+```bash
+flutter build apk \
+  --dart-define=FLAVOR=prod \
+  --dart-define=APP_NAME="BookBuddy" \
+  --dart-define=APP_SUFFIX="" \
+  --dart-define=BOOKS_API_KEY=YOUR_PROD_KEY \
+  --dart-define=BOOKS_BASE_URL=https://www.googleapis.com/books/v1 \
+  -t lib/main_prod.dart
+```

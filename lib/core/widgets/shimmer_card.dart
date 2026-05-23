@@ -1,3 +1,4 @@
+import 'package:book_buddy/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ShimmerCard extends StatefulWidget {
@@ -33,14 +34,8 @@ class _ShimmerCardState extends State<ShimmerCard>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final baseColor = isDark
-        ? const Color(0xFF2A2A2A)
-        : const Color(0xFFE8E8E8);
-    final highlightColor = isDark
-        ? const Color(0xFF3A3A3A)
-        : const Color(0xFFF5F5F5);
+    const baseColor = Color(0xffEBEBEB);
+    const highlightColor = Colors.white;
 
     return AnimatedBuilder(
       animation: _animation,
@@ -52,6 +47,7 @@ class _ShimmerCardState extends State<ShimmerCard>
         )!;
 
         return Card(
+          color: AppColors.surface,
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(

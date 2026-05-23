@@ -31,16 +31,33 @@ class FavoritesScreen extends ConsumerWidget {
       ),
       backgroundColor: AppColors.surface,
       body: favorites.isEmpty
-          ? EmptyStateWidget(
-              action: () => context.go(AppRoutes.bookList),
-              message: 'Have no favorite books',
+          ? RefreshIndicator(
+              color: AppColors.primary,
+              onRefresh: () => ref.read(favoritesProvider.notifier).refresh(),
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: EmptyStateWidget(
+                      title: 'Not Found',
+                      action: () => context.go(AppRoutes.bookList),
+                      message: 'Have no favorite books',
+                    ),
+                  ),
+                ],
+              ),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              itemCount: favorites.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 8),
-              itemBuilder: (context, index) =>
-                  _FavoriteCard(book: favorites[index]),
+          : RefreshIndicator(
+              color: AppColors.primary,
+              onRefresh: () => ref.read(favoritesProvider.notifier).refresh(),
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                itemCount: favorites.length,
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
+                itemBuilder: (context, index) =>
+                    _FavoriteCard(book: favorites[index]),
+              ),
             ),
     );
   }

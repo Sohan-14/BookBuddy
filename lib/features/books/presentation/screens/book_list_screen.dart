@@ -83,6 +83,7 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
               data: (bookState) {
                 if (bookState.isEmpty) {
                   return RefreshIndicator(
+                    color: AppColors.primary,
                     onRefresh: () =>
                         ref.read(bookListProvider.notifier).refresh(),
                     child: CustomScrollView(
@@ -103,6 +104,7 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
                 }
 
                 return RefreshIndicator(
+                  color: AppColors.primary,
                   onRefresh: () =>
                       ref.read(bookListProvider.notifier).refresh(),
                   child: ListView.separated(

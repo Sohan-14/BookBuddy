@@ -1,4 +1,3 @@
-import 'package:book_buddy/core/error/failures.dart';
 import 'package:book_buddy/features/books/domain/entities/book_entity.dart';
 import 'package:book_buddy/features/favorites/presentation/providers/favorites_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,31 +15,31 @@ class FavoritesNotifier extends _$FavoritesNotifier {
     }
   }
 
-  // ─── Public ───────────────────────────────────────────────────────
-
   void toggle(BookEntity book) {
     isFavorite(book.id) ? _remove(book.id) : _add(book);
   }
 
   bool isFavorite(String bookId) => state.any((b) => b.id == bookId);
 
-  // ─── Private ──────────────────────────────────────────────────────
-
   void _add(BookEntity book) {
     try {
       ref.read(favoritesRepositoryProvider).addFavorite(book);
       state = [...state, book];
-    } on CacheFailure {
-      // Hive write failed — state unchanged, consistent with storage
-    }
+    } catch (_) {}
   }
 
   void _remove(String bookId) {
     try {
       ref.read(favoritesRepositoryProvider).removeFavorite(bookId);
       state = state.where((b) => b.id != bookId).toList();
-    } on CacheFailure {
-      // Hive delete failed — state unchanged
+    } catch (_) {}
+  }
+
+  Future<void> refresh() async {
+    try {
+      state = ref.read(favoritesRepositoryProvider).getFavorites();
+    } catch (_) {
+      state = [];
     }
   }
 }

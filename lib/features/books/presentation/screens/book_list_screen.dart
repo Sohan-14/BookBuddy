@@ -54,6 +54,7 @@ class _BookListScreenState extends ConsumerState<BookListScreen> {
         shadowColor: AppColors.primary,
         surfaceTintColor: AppColors.primary,
         backgroundColor: AppColors.primary,
+        centerTitle: false,
         title: Text(
           'BookBuddy',
           style: AppTextStyles.displayLarge.copyWith(color: AppColors.surface),

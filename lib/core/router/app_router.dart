@@ -1,7 +1,6 @@
 import 'package:book_buddy/core/router/app_routes.dart';
 import 'package:book_buddy/core/router/scaffold_with_bottom_nav.dart';
 import 'package:book_buddy/features/screens.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -42,9 +41,7 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: AppRoutes.settings,
                 pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Center(
-                    child: Text('Settings'),
-                  ),
+                  child: SettingsScreen(),
                 ),
               ),
             ],

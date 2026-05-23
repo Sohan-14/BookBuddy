@@ -22,3 +22,6 @@ flutter run -t lib/main_prod.dart \
 
 # show 0 errors (some warnings from empty files is fine)
 flutter analyze
+
+# Code Generation
+dart run build_runner build --delete-conflicting-outputs

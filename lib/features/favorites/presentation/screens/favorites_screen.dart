@@ -23,6 +23,7 @@ class FavoritesScreen extends ConsumerWidget {
         surfaceTintColor: AppColors.surface,
         backgroundColor: AppColors.surface,
         elevation: 1,
+        centerTitle: false,
         title: Text(
           'Favorites',
           style: AppTextStyles.headlineMedium,
